@@ -1,11 +1,86 @@
 ---
 layout: layout
 ---
-
+<!DOCTYPE html>
+<html>
+    
 {% assign __ = site.data.languages[site.language] %}
 {% include index.html %}
 
-<script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+<body>
+    
+    <div class="cover">
+      <div class="clock"></div>
+      <div class='hours'></div>
+      <div class='seconds'></div>
+      <div class='minutes'></div>
+      <div class="site-name">
+        <div class="site-name__inner">
+          <div class="name">{{ site.title }}</div>
+          <div class="desc">{{site.description}}</div>
+          <div class="btn">Blog</div>
+        </div>
+      </div>
+    </div>
+
+    <header class="site-header">
+
+      <div class="wrapper">
+
+        <nav class="site-nav">
+            {% for page in site.pages %}
+              {% if page.title %}
+              <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
+              {% endif %}
+            {% endfor %}
+        </nav>
+      </div>
+    </header>
+    <div class="page-content">
+        {{ content }}
+    </div>
+
+<script>
+  setInterval(function() {
+    var seconds = new Date().getSeconds();
+    var sdegree = seconds * 6 + 270;
+    seconds = ("0" + seconds).slice(-2);
+    var secondSel = document.querySelector(".seconds");
+
+    secondSel.style.transform = "rotate(" + sdegree + "deg) translate(160px) rotate(-" + sdegree + "deg)";
+    secondSel.innerHTML = seconds;
+
+    var minutes = new Date().getMinutes();
+    var mdegree = minutes * 6 + 270;
+    var minutesSel = document.querySelector(".minutes");
+    minutes = ("0" + minutes).slice(-2);
+
+    minutesSel.style.transform = "rotate(" + mdegree + "deg) translate(181px) rotate(-" + mdegree + "deg)";
+    minutesSel.innerHTML =  minutes;
+
+    var hours = new Date().getHours();
+    var hoursSel = document.querySelector(".hours");
+
+    if (hours > 12) {
+      hours = hours - 12;
+    }
+
+    hours = ("0" + hours).slice(-2);
+
+    hoursSel.innerHTML = hours;
+  }, 1000);
+
+  var btnSel = document.querySelector('.btn');
+  var header = document.getElementsByTagName('header')[0];
+
+  btnSel.addEventListener("click", function() {
+    header.scrollIntoView();
+  }, false);
+
+    </script>
+    
+    
+    <script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
 <script>tpwidget("init", {
     "flavor": "bubble",
     "location": "WW7PBM8PNJUD",
@@ -19,3 +94,7 @@ layout: layout
     "hash": "c6f8f5b01695ee6ad73854ad28b8e967"
 });
 tpwidget("show");</script>
+    
+</body>
+    
+ </html>
